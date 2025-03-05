@@ -6,8 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
-  Alert,
-  Modal, 
+  Modal,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -43,14 +42,13 @@ export default function App() {
   };
 
   const addTask = () => {
-    if (task.trim() === "")
-      return Alert.alert("แจ้งเตือน", "กรุณาใส่รายการที่ต้องทำ!");
+    if (task.trim() === "") return;
 
     const newTask = {
       id: Date.now().toString(),
       text: task,
       priority: priority,
-      createdAt: new Date().toISOString(), 
+      createdAt: new Date().toISOString(),
       completed: false,
     };
 
@@ -69,8 +67,8 @@ export default function App() {
   };
 
   const updateTask = () => {
-    if (task.trim() === "")
-      return Alert.alert("แจ้งเตือน", "กรุณาใส่รายการที่ต้องทำ!");
+    if (task.trim() === "") return;
+
     const updatedTasks = tasks.map((item) =>
       item.id === editingTaskId
         ? { ...item, text: task, priority: priority }
@@ -172,7 +170,7 @@ export default function App() {
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
-        extraData={tasks} 
+        extraData={tasks}
         renderItem={({ item }) => (
           <View style={styles.taskContainer}>
             <View style={styles.taskContent}>
@@ -250,19 +248,27 @@ export default function App() {
               <>
                 <Text style={styles.modalTaskText}>{selectedTask.text}</Text>
                 <Text style={styles.modalInfoText}>
-                  วันที่สร้าง: {new Date(selectedTask.createdAt).toLocaleString("th-TH")}
+                  วันที่สร้าง:{" "}
+                  {new Date(selectedTask.createdAt).toLocaleString("th-TH")}
                 </Text>
-                <Text style={[styles.modalPriorityText, {
-                  color: selectedTask.priority === "สูง" 
-                    ? "#dc3545" 
-                    : selectedTask.priority === "กลาง"
-                    ? "#ffc107"
-                    : "#28a745"
-                }]}>
+                <Text
+                  style={[
+                    styles.modalPriorityText,
+                    {
+                      color:
+                        selectedTask.priority === "สูง"
+                          ? "#dc3545"
+                          : selectedTask.priority === "กลาง"
+                          ? "#ffc107"
+                          : "#28a745",
+                    },
+                  ]}
+                >
                   ความสำคัญ: {selectedTask.priority}
                 </Text>
                 <Text style={styles.modalStatusText}>
-                  สถานะ: {selectedTask.completed ? "เสร็จสิ้น ✅" : "ยังไม่เสร็จ ⏳"}
+                  สถานะ:{" "}
+                  {selectedTask.completed ? "เสร็จสิ้น ✅" : "ยังไม่เสร็จ ⏳"}
                 </Text>
               </>
             )}
@@ -292,7 +298,7 @@ const styles = StyleSheet.create({
     color: "#2c3e50",
     textAlign: "center",
     paddingVertical: 15,
-    textShadowColor: 'rgba(0, 0, 0, 0.1)',
+    textShadowColor: "rgba(0, 0, 0, 0.1)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
@@ -376,7 +382,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "bold",
     color: "white",
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,
   },
@@ -396,7 +402,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,
   },
@@ -465,19 +471,19 @@ const styles = StyleSheet.create({
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 25,
-    width: '90%',
-    shadowColor: '#000',
+    width: "90%",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
@@ -485,41 +491,41 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#2c3e50',
+    fontWeight: "bold",
+    color: "#2c3e50",
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: "center",
   },
   modalTaskText: {
     fontSize: 18,
-    color: '#2c3e50',
+    color: "#2c3e50",
     marginBottom: 15,
     lineHeight: 24,
   },
   modalInfoText: {
     fontSize: 14,
-    color: '#7f8c8d',
+    color: "#7f8c8d",
     marginBottom: 10,
   },
   modalPriorityText: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: "500",
     marginBottom: 10,
   },
   modalStatusText: {
     fontSize: 16,
-    color: '#2c3e50',
+    color: "#2c3e50",
     marginBottom: 20,
   },
   modalCloseButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: "#3498db",
     padding: 12,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   modalCloseText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
