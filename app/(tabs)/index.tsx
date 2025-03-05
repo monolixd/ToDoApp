@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-} from "react-native";
-import { Picker } from "@react-native-picker/picker";
+import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Picker } from "@react-native-picker/picker"; // นำเข้า Picker
+import TaskInput from "@/components/TaskInput";
+import TaskList from "@/components/TaskList";
+import TaskModal from "@/components/TaskModal";
 
 export default function App() {
   const [task, setTask] = useState("");
@@ -114,7 +109,7 @@ export default function App() {
       );
     }
 
-    setTasks(sortedTasks);
+    setTasks(sortedTasks); // ✅ อัปเดต React State ด้วยอาร์เรย์ที่จัดเรียงใหม่
     setSortOption(option);
   };
 
@@ -127,31 +122,14 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.header}>📝 รายการสิ่งที่ต้องทำ</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="เพิ่มรายการที่ต้องทำ..."
-        value={task}
-        onChangeText={setTask}
+      <TaskInput
+        task={task}
+        setTask={setTask}
+        priority={priority}
+        setPriority={setPriority}
+        onSubmit={editingTaskId ? updateTask : addTask}
+        editingTaskId={editingTaskId}
       />
-
-      <Picker
-        selectedValue={priority}
-        style={styles.picker}
-        onValueChange={(itemValue) => setPriority(itemValue)}
-      >
-        <Picker.Item label="ความสำคัญ: ต่ำ🟢" value="ต่ำ" />
-        <Picker.Item label="ความสำคัญ: กลาง🟡" value="กลาง" />
-        <Picker.Item label="ความสำคัญ: สูง🔴" value="สูง" />
-      </Picker>
-
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={editingTaskId ? updateTask : addTask}
-      >
-        <Text style={styles.addButtonText}>
-          {editingTaskId ? "บันทึกการแก้ไข" : "เพิ่มรายการ"}
-        </Text>
-      </TouchableOpacity>
 
       <View style={styles.sortContainer}>
         <Text style={styles.sortLabel}>จัดเรียงตาม:</Text>
@@ -162,125 +140,24 @@ export default function App() {
         >
           <Picker.Item label="เพิ่มล่าสุด" value="เพิ่มล่าสุด" />
           <Picker.Item label="เพิ่มนานสุด" value="เพิ่มนานสุด" />
-          <Picker.Item label="ความสำคัญมากไปน้อย" value="ความสำคัญมากไปน้อย" />
-          <Picker.Item label="ความสำคัญน้อยไปมาก" value="ความสำคัญน้อยไปมาก" />
+          <Picker.Item label="ความสำคัญสูงไปต่ำ" value="ความสำคัญสูงไปต่ำ" />
+          <Picker.Item label="ความสำคัญต่ำไปสูง" value="ความสำคัญต่ำไปสูง" />
         </Picker>
       </View>
 
-      <FlatList
-        data={tasks}
-        keyExtractor={(item) => item.id}
-        extraData={tasks}
-        renderItem={({ item }) => (
-          <View style={styles.taskContainer}>
-            <View style={styles.taskContent}>
-              <TouchableOpacity onPress={() => handleTaskPress(item)}>
-                <Text
-                  style={[
-                    styles.taskText,
-                    item.completed && styles.completedTaskText,
-                  ]}
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                >
-                  {item.text}
-                </Text>
-              </TouchableOpacity>
-              <Text style={styles.timeText}>
-                {new Date(item.createdAt).toLocaleString("th-TH")}
-              </Text>
-            </View>
-            <View
-              style={[
-                styles.priorityBadge,
-                {
-                  backgroundColor:
-                    item.priority === "สูง"
-                      ? "#dc3545"
-                      : item.priority === "กลาง"
-                      ? "#ffc107"
-                      : "#28a745",
-                },
-              ]}
-            >
-              <Text style={styles.priorityText}>
-                {item.priority === "สูง"
-                  ? "🔴 สูง"
-                  : item.priority === "กลาง"
-                  ? "🟡 กลาง"
-                  : "🟢 ต่ำ"}
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={styles.completeButton}
-              onPress={() => toggleTaskCompletion(item.id)}
-            >
-              <Text style={styles.completeText}>
-                {item.completed ? "☑️" : "⬜"}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={() => editTask(item.id)}
-            >
-              <Text style={styles.editText}>✏️</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.deleteButton}
-              onPress={() => deleteTask(item.id)}
-            >
-              <Text style={styles.deleteText}>🗑️</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+      <TaskList
+        tasks={tasks}
+        onPress={handleTaskPress}
+        onToggleComplete={toggleTaskCompletion}
+        onEdit={editTask}
+        onDelete={deleteTask}
       />
 
-      <Modal
-        animationType="slide"
-        transparent={true}
+      <TaskModal
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>รายละเอียดงาน</Text>
-            {selectedTask && (
-              <>
-                <Text style={styles.modalTaskText}>{selectedTask.text}</Text>
-                <Text style={styles.modalInfoText}>
-                  วันที่สร้าง:{" "}
-                  {new Date(selectedTask.createdAt).toLocaleString("th-TH")}
-                </Text>
-                <Text
-                  style={[
-                    styles.modalPriorityText,
-                    {
-                      color:
-                        selectedTask.priority === "สูง"
-                          ? "#dc3545"
-                          : selectedTask.priority === "กลาง"
-                          ? "#ffc107"
-                          : "#28a745",
-                    },
-                  ]}
-                >
-                  ความสำคัญ: {selectedTask.priority}
-                </Text>
-                <Text style={styles.modalStatusText}>
-                  สถานะ:{" "}
-                  {selectedTask.completed ? "เสร็จสิ้น ✅" : "ยังไม่เสร็จ ⏳"}
-                </Text>
-              </>
-            )}
-            <TouchableOpacity
-              style={styles.modalCloseButton}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={styles.modalCloseText}>ปิด</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+        task={selectedTask}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 }
@@ -301,146 +178,6 @@ const styles = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 0, 0.1)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#e1e4e8",
-    padding: 15,
-    marginBottom: 15,
-    borderRadius: 15,
-    backgroundColor: "white",
-    fontSize: 16,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    color: "#2c3e50",
-  },
-  picker: {
-    height: 50,
-    width: "100%",
-    marginBottom: 15,
-    backgroundColor: "white",
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: "#e1e4e8",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  taskContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 15,
-    backgroundColor: "white",
-    marginVertical: 8,
-    borderRadius: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 4,
-    borderWidth: 1,
-    borderColor: "#f1f1f1",
-  },
-  taskContent: {
-    flex: 1,
-    marginRight: 15,
-  },
-  taskText: {
-    fontSize: 16,
-    marginBottom: 6,
-    color: "#2c3e50",
-    fontWeight: "500",
-  },
-  completedTaskText: {
-    textDecorationLine: "line-through",
-    color: "#95a5a6",
-    fontStyle: "italic",
-  },
-  timeText: {
-    fontSize: 12,
-    color: "#7f8c8d",
-    fontStyle: "italic",
-  },
-  priorityBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 20,
-    marginLeft: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  priorityText: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "white",
-    textShadowColor: "rgba(0, 0, 0, 0.2)",
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 1,
-  },
-  addButton: {
-    backgroundColor: "#3498db",
-    padding: 15,
-    borderRadius: 15,
-    alignItems: "center",
-    marginBottom: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  addButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.2)",
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 1,
-  },
-  completeButton: {
-    backgroundColor: "#e8f4fd",
-    padding: 10,
-    borderRadius: 12,
-    marginLeft: 8,
-    borderWidth: 1,
-    borderColor: "#cfe2ff",
-  },
-  completeText: {
-    fontSize: 20,
-    color: "#3498db",
-  },
-  editButton: {
-    backgroundColor: "#e8f4fd",
-    padding: 10,
-    borderRadius: 12,
-    marginLeft: 8,
-    borderWidth: 1,
-    borderColor: "#cfe2ff",
-  },
-  editText: {
-    fontSize: 20,
-    color: "#3498db",
-  },
-  deleteButton: {
-    backgroundColor: "#fee8e7",
-    padding: 10,
-    borderRadius: 12,
-    marginLeft: 8,
-    borderWidth: 1,
-    borderColor: "#ffcdd2",
-  },
-  deleteText: {
-    fontSize: 20,
-    color: "#e74c3c",
   },
   sortContainer: {
     flexDirection: "row",
@@ -468,64 +205,5 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     borderWidth: 1,
     borderColor: "#e1e4e8",
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 25,
-    width: "90%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  modalTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#2c3e50",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  modalTaskText: {
-    fontSize: 18,
-    color: "#2c3e50",
-    marginBottom: 15,
-    lineHeight: 24,
-  },
-  modalInfoText: {
-    fontSize: 14,
-    color: "#7f8c8d",
-    marginBottom: 10,
-  },
-  modalPriorityText: {
-    fontSize: 16,
-    fontWeight: "500",
-    marginBottom: 10,
-  },
-  modalStatusText: {
-    fontSize: 16,
-    color: "#2c3e50",
-    marginBottom: 20,
-  },
-  modalCloseButton: {
-    backgroundColor: "#3498db",
-    padding: 12,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  modalCloseText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });

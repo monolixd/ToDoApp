@@ -1,50 +1,68 @@
-# Welcome to your Expo app 👋
+เพิ่ม AsyncStorage เพื่อให้ To-Do List บันทึกข้อมูลไว้ แม้จะปิดแอปแล้วเปิดใหม่ Task จะไม่หายไป 
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
 
-1. Install dependencies
+1. index.tsx
+ไฟล์หลักของแอปพลิเคชันที่จัดการสถานะและการทำงานหลักของแอป
 
-   ```bash
-   npm install
-   ```
+ฟังก์ชันหลัก:
+loadTasks: โหลดรายการงานจาก AsyncStorage
+saveTasks: บันทึกรายการงานลงใน AsyncStorage
+ทำ AsyncStorage เพื่อให้ To-Do List บันทึกข้อมูลไว้ แม้จะปิดแอปแล้วเปิดใหม่ Task จะไม่หายไป 
+addTask: เพิ่มรายการงานใหม่
+editTask: แก้ไขรายการงานที่มีอยู่
+updateTask: อัปเดตรายการงานที่แก้ไข
+deleteTask: ลบรายการงาน
+toggleTaskCompletion: เปลี่ยนสถานะการทำงานของรายการงาน (เสร็จ/ไม่เสร็จ)
+sortTasks: จัดเรียงรายการงานตามตัวเลือกที่เลือก
+handleTaskPress: จัดการการกดที่รายการงานเพื่อแสดงรายละเอียดใน Modal
+2. TaskInput.tsx
+คอมโพเนนต์สำหรับการเพิ่มและแก้ไขรายการงาน
 
-2. Start the app
+ฟังก์ชันหลัก:
+TaskInput: รับค่า props และจัดการการแสดงผลของอินพุตสำหรับการเพิ่มและแก้ไขรายการงาน
+3. TaskList.tsx
+คอมโพเนนต์สำหรับแสดงรายการงานทั้งหมด
 
-   ```bash
-    npx expo start
-   ```
+ฟังก์ชันหลัก:
+TaskList: รับค่า props และจัดการการแสดงผลของรายการงานทั้งหมดโดยใช้ FlatList
+4. TaskItem.tsx
+คอมโพเนนต์สำหรับแสดงรายการงานแต่ละรายการ
 
-In the output, you'll find options to open the app in a
+ฟังก์ชันหลัก:
+TaskItem: รับค่า props และจัดการการแสดงผลของรายการงานแต่ละรายการ รวมถึงปุ่มสำหรับทำเครื่องหมายว่าเสร็จ, แก้ไข, และลบ
+5. TaskModal.tsx
+คอมโพเนนต์สำหรับแสดงรายละเอียดของรายการงานใน Modal
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+ฟังก์ชันหลัก:
+TaskModal: รับค่า props และจัดการการแสดงผลของรายละเอียดรายการงานใน Modal
+ตัวอย่างการใช้งานใน index.tsx:
+สรุป:
+index.tsx: จัดการสถานะและการทำงานหลักของแอป
+TaskInput.tsx: คอมโพเนนต์สำหรับการเพิ่มและแก้ไขรายการงาน
+TaskList.tsx: คอมโพเนนต์สำหรับแสดงรายการงานทั้งหมด
+TaskItem.tsx: คอมโพเนนต์สำหรับแสดงรายการงานแต่ละรายการ
+TaskModal.tsx: คอมโพเนนต์สำหรับแสดงรายละเอียดของรายการงานใน Modal
+โปรเจคนี้ช่วยให้ผู้ใช้สามารถเพิ่ม, แก้ไข, ลบ, ทำเครื่องหมายว่าเสร็จ, และจัดเรียงรายการงานได้อย่างง่ายดาย
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+ToDo App
+ฟีเจอร์หลัก:
+เพิ่มรายการงาน: ผู้ใช้สามารถเพิ่มรายการงานใหม่ได้โดยกรอกข้อมูลและเลือกความสำคัญ
+แก้ไขรายการงาน: ผู้ใช้สามารถแก้ไขรายการงานที่มีอยู่ได้
+ลบรายการงาน: ผู้ใช้สามารถลบรายการงานที่ไม่ต้องการได้
+ทำเครื่องหมายว่าเสร็จ: ผู้ใช้สามารถทำเครื่องหมายรายการงานว่าเสร็จแล้วหรือยังไม่เสร็จ
+จัดเรียงรายการงาน: ผู้ใช้สามารถจัดเรียงรายการงานตามวันที่เพิ่มหรือระดับความสำคัญ
+คอมโพเนนต์หลัก:
+TaskInput: คอมโพเนนต์สำหรับการเพิ่มและแก้ไขรายการงาน
+TaskList: คอมโพเนนต์สำหรับแสดงรายการงานทั้งหมด
+TaskItem: คอมโพเนนต์สำหรับแสดงรายการงานแต่ละรายการ
+TaskModal: คอมโพเนนต์สำหรับแสดงรายละเอียดของรายการงานใน Modal
+การทำงาน:
+โหลดและบันทึกรายการงาน: ใช้ AsyncStorage ในการจัดเก็บและโหลดรายการงาน
+จัดการสถานะ: ใช้ React useState และ useEffect ในการจัดการสถานะและการทำงานต่างๆ
+ตัวอย่างการใช้งาน:
+เพิ่มรายการงานใหม่
+แก้ไขรายการงานที่มีอยู่
+ลบรายการงานที่ไม่ต้องการ
+ทำเครื่องหมายรายการงานว่าเสร็จแล้ว
+จัดเรียงรายการงานตามตัวเลือกที่เลือก
