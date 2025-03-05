@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  Modal, // Add this
+  Modal, 
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -50,7 +50,7 @@ export default function App() {
       id: Date.now().toString(),
       text: task,
       priority: priority,
-      createdAt: new Date().toISOString(), // ✅ บันทึกเป็น ISO string
+      createdAt: new Date().toISOString(), 
       completed: false,
     };
 
@@ -172,7 +172,7 @@ export default function App() {
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
-        extraData={tasks} // ✅ ทำให้ FlatList รู้ว่าข้อมูลเปลี่ยน
+        extraData={tasks} 
         renderItem={({ item }) => (
           <View style={styles.taskContainer}>
             <View style={styles.taskContent}>
