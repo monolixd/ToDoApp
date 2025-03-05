@@ -104,12 +104,12 @@ export default function App() {
       sortedTasks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } else if (option === "เพิ่มนานสุด") {
       sortedTasks.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-    } else if (option === "ความสำคัญมากไปน้อย") {
+    } else if (option === "ความสำคัญสูงไปต่ำ") {
       const priorityOrder = { สูง: 3, กลาง: 2, ต่ำ: 1 };
       sortedTasks.sort(
         (a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]
       );
-    } else if (option === "ความสำคัญน้อยไปมาก") {
+    } else if (option === "ความสำคัญต่ำไปสูง") {
       const priorityOrder = { สูง: 3, กลาง: 2, ต่ำ: 1 };
       sortedTasks.sort(
         (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]

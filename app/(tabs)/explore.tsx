@@ -1,95 +1,75 @@
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet } from "react-native";
+import { Collapsible } from "@/components/Collapsible";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-
-export default function TabTwoScreen() {
+export default function ExploreScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
+      headerBackgroundColor={{ light: "#D0D0D0" }}
       headerImage={
         <IconSymbol
           size={310}
           color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
+          name="questionmark.circle"
           style={styles.headerImage}
         />
-      }>
+      }
+    >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText type="title">วิธีใช้งาน ToDo App</ThemedText>
       </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
+
+      <Collapsible title="📝 การเพิ่มรายการใหม่">
         <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
+          1. พิมพ์รายการที่ต้องทำในช่อง "เพิ่มรายการที่ต้องทำ..."
         </ThemedText>
         <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
+          2. เลือกระดับความสำคัญ: ต่ำ🟢, ปานกลาง🟡, หรือสูง🔴
         </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
+        <ThemedText>3. กดปุ่ม "เพิ่มรายการ" เพื่อบันทึก</ThemedText>
       </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
+
+      <Collapsible title="✏️ การแก้ไขรายการ">
+        <ThemedText>1. กดปุ่ม ✏️ ที่รายการที่ต้องการแก้ไข</ThemedText>
+        <ThemedText>2. แก้ไขข้อความหรือระดับความสำคัญตามต้องการ</ThemedText>
         <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
+          3. กดปุ่ม "บันทึกการแก้ไข" เพื่อบันทึกการเปลี่ยนแปลง
         </ThemedText>
       </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
+
+      <Collapsible title="✅ การทำเครื่องหมายว่าเสร็จ">
+        <ThemedText>• กดปุ่ม ⬜ เพื่อทำเครื่องหมายว่าเสร็จแล้ว</ThemedText>
+        <ThemedText>• เมื่อเสร็จแล้ว จะแสดงเป็น ☑️</ThemedText>
+        <ThemedText>• รายการที่เสร็จแล้วจะมีการขีดฆ่าข้อความ</ThemedText>
       </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
+
+      <Collapsible title="🗑️ การลบรายการ">
+        <ThemedText>• กดปุ่ม 🗑️ เพื่อลบรายการที่ไม่ต้องการ</ThemedText>
+        <ThemedText>• ระบบจะแสดงข้อความยืนยันก่อนลบ</ThemedText>
       </Collapsible>
-      <Collapsible title="Light and dark mode components">
+
+      <Collapsible title="🔄 การจัดเรียงรายการ">
+        <ThemedText>สามารถจัดเรียงรายการได้ 4 แบบ:</ThemedText>
+        <ThemedText>• เพิ่มล่าสุด - แสดงรายการที่เพิ่มล่าสุดก่อน</ThemedText>
+        <ThemedText>• เพิ่มนานสุด - แสดงรายการที่เพิ่มนานที่สุดก่อน</ThemedText>
         <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
+          • ความสำคัญมากไปน้อย - เรียงจากความสำคัญสูงไปต่ำ
         </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
+        <ThemedText>
+          • ความสำคัญน้อยไปมาก - เรียงจากความสำคัญต่ำไปสูง
+        </ThemedText>
       </Collapsible>
-      <Collapsible title="Animations">
+
+      <Collapsible title="ℹ️ รายละเอียดเพิ่มเติม">
         <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
+          • กดที่ข้อความของรายการเพื่อดูรายละเอียดเพิ่มเติม
         </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
+        <ThemedText>
+          • รายละเอียดจะแสดง: ข้อความเต็ม, วันที่สร้าง, ระดับความสำคัญ และสถานะ
+        </ThemedText>
       </Collapsible>
     </ParallaxScrollView>
   );
@@ -97,13 +77,16 @@ export default function TabTwoScreen() {
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: '#808080',
+    color: "#808080",
     bottom: -90,
     left: -35,
-    position: 'absolute',
+    position: "absolute",
   },
   titleContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
