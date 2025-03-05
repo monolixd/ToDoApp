@@ -16,7 +16,7 @@ export default function App() {
   const [priority, setPriority] = useState("ต่ำ");
   const [tasks, setTasks] = useState([]);
   const [editingTaskId, setEditingTaskId] = useState(null);
-  const [sortOption, setSortOption] = useState("ล่าสุด");
+  const [sortOption, setSortOption] = useState("เพิ่มล่าสุด");
 
   useEffect(() => {
     loadTasks();
@@ -48,6 +48,7 @@ export default function App() {
       text: task,
       priority: priority,
       createdAt: new Date().toISOString(), // ✅ บันทึกเป็น ISO string
+      completed: false,
     };
 
     const updatedTasks = [...tasks, newTask];
@@ -56,7 +57,6 @@ export default function App() {
     setTask("");
     setPriority("ต่ำ");
   };
-
 
   const editTask = (id) => {
     const taskToEdit = tasks.find((item) => item.id === id);
@@ -86,6 +86,14 @@ export default function App() {
     saveTasks(updatedTasks);
   };
 
+  const toggleTaskCompletion = (id) => {
+    const updatedTasks = tasks.map((item) =>
+      item.id === id ? { ...item, completed: !item.completed } : item
+    );
+    setTasks(updatedTasks);
+    saveTasks(updatedTasks);
+  };
+
   const sortTasks = (option) => {
     let sortedTasks = [...tasks];
 
@@ -108,7 +116,6 @@ export default function App() {
     setTasks(sortedTasks);
     setSortOption(option);
   };
-
 
   return (
     <View style={styles.container}>
@@ -161,7 +168,14 @@ export default function App() {
         renderItem={({ item }) => (
           <View style={styles.taskContainer}>
             <View style={styles.taskContent}>
-              <Text style={styles.taskText}>{item.text}</Text>
+              <Text
+                style={[
+                  styles.taskText,
+                  item.completed && styles.completedTaskText,
+                ]}
+              >
+                {item.text}
+              </Text>
               <Text style={styles.timeText}>
                 {new Date(item.createdAt).toLocaleString("th-TH")}
               </Text>
@@ -187,6 +201,14 @@ export default function App() {
                   : "🟢 ต่ำ"}
               </Text>
             </View>
+            <TouchableOpacity
+              style={styles.completeButton}
+              onPress={() => toggleTaskCompletion(item.id)}
+            >
+              <Text style={styles.completeText}>
+                {item.completed ? "☑️" : "⬜"}
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={styles.editButton}
               onPress={() => editTask(item.id)}
@@ -265,6 +287,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 4,
   },
+  completedTaskText: {
+    textDecorationLine: "line-through",
+    color: "#888",
+  },
   timeText: {
     fontSize: 12,
     color: "#666",
@@ -296,6 +322,18 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  completeButton: {
+    backgroundColor: "#e7f3fe",
+    padding: 8,
+    borderRadius: 8,
+    marginLeft: 8,
+    borderWidth: 1,
+    borderColor: "#cfe2ff",
+  },
+  completeText: {
+    fontSize: 18,
+    color: "#1a73e8",
   },
   editButton: {
     backgroundColor: "#e7f3fe",
