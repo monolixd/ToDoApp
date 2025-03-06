@@ -28,7 +28,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
   onToggleComplete,
   onEdit,
   onDelete,
-  showActions = true, // ✅ ค่าเริ่มต้นให้สามารถแก้ไข/ลบ/เสร็จสิ้นได้
+  showActions = true, // ✅ ค่าเริ่มต้นให้แสดงปุ่ม
 }) => {
   return (
     <View style={styles.taskContainer}>
@@ -71,21 +71,17 @@ const TaskItem: React.FC<TaskItemProps> = ({
         </Text>
       </View>
 
-      {/* ✅ ซ่อนปุ่มเสร็จสิ้นเมื่อ showActions === false */}
-      {showActions && (
-        <TouchableOpacity
-          style={styles.completeButton}
-          onPress={() => onToggleComplete?.(item.id)}
-        >
-          <Text style={styles.completeText}>
-            {item.completed ? "☑️" : "⬜"}
-          </Text>
-        </TouchableOpacity>
-      )}
-
-      {/* ✅ ซ่อนปุ่มแก้ไข/ลบเมื่อ showActions === false */}
+      {/* ✅ ซ่อนปุ่มทั้งหมดถ้า showActions === false */}
       {showActions && (
         <>
+          <TouchableOpacity
+            style={styles.completeButton}
+            onPress={() => onToggleComplete?.(item.id)}
+          >
+            <Text style={styles.completeText}>
+              {item.completed ? "☑️" : "⬜"}
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.editButton}
             onPress={() => onEdit?.(item.id)}
