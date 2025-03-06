@@ -8,7 +8,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 export default function ExploreScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0" }}
+      headerBackgroundColor={{ light: "#ffffff" }} // เปลี่ยนจาก "#D0D0D0" เป็น "#ffffff"
       headerImage={
         <IconSymbol
           size={310}
@@ -17,6 +17,7 @@ export default function ExploreScreen() {
           style={styles.headerImage}
         />
       }
+      style={styles.container} // เพิ่ม style นี้
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText style={styles.titleText} type="title">
@@ -78,6 +79,10 @@ export default function ExploreScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff', // เพิ่มพื้นหลังสีขาว
+  },
   headerImage: {
     color: "#808080",
     bottom: -90,
@@ -90,6 +95,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: '#ffffff', // เพิ่มพื้นหลังสีขาวให้ container
   },
   titleText: {
     fontFamily: 'Kanit-Bold',
