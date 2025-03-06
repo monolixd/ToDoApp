@@ -58,6 +58,7 @@ export default TaskInput;
 
 const styles = StyleSheet.create({
   input: {
+    fontFamily: 'Kanit-Regular',
     borderWidth: 1,
     borderColor: "#e1e4e8",
     padding: 15,
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     color: "#2c3e50",
   },
   picker: {
+    fontFamily: 'Kanit-Regular',
     height: 50,
     width: "100%",
     marginBottom: 15,
@@ -99,9 +101,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   addButtonText: {
+    fontFamily: 'Kanit-Medium',
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,

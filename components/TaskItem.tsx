@@ -114,17 +114,19 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   taskText: {
+    fontFamily: 'Kanit-Medium',
     fontSize: 16,
     marginBottom: 6,
     color: "#2c3e50",
-    fontWeight: "500",
   },
   completedTaskText: {
+    fontFamily: 'Kanit-Regular',
     textDecorationLine: "line-through",
     color: "#95a5a6",
     fontStyle: "italic",
   },
   timeText: {
+    fontFamily: 'Kanit-Regular',
     fontSize: 12,
     color: "#7f8c8d",
     fontStyle: "italic",
@@ -141,8 +143,8 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   priorityText: {
+    fontFamily: 'Kanit-Medium',
     fontSize: 12,
-    fontWeight: "bold",
     color: "white",
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
@@ -157,6 +159,7 @@ const styles = StyleSheet.create({
     borderColor: "#cfe2ff",
   },
   completeText: {
+    fontFamily: 'Kanit-Regular',
     fontSize: 20,
     color: "#3498db",
   },
@@ -169,6 +172,7 @@ const styles = StyleSheet.create({
     borderColor: "#cfe2ff",
   },
   editText: {
+    fontFamily: 'Kanit-Regular',
     fontSize: 20,
     color: "#3498db",
   },
@@ -181,6 +185,7 @@ const styles = StyleSheet.create({
     borderColor: "#ffcdd2",
   },
   deleteText: {
+    fontFamily: 'Kanit-Regular',
     fontSize: 20,
     color: "#e74c3c",
   },

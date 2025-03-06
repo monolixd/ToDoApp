@@ -19,7 +19,9 @@ export default function ExploreScreen() {
       }
     >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">วิธีใช้งาน ToDo App</ThemedText>
+        <ThemedText style={styles.titleText} type="title">
+          วิธีใช้งาน ToDo App
+        </ThemedText>
       </ThemedView>
 
       <Collapsible title="📝 การเพิ่มรายการใหม่">
@@ -88,5 +90,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
     justifyContent: "center",
+  },
+  titleText: {
+    fontFamily: 'Kanit-Bold',
+    fontSize: 28,
+    color: "#2c3e50",
+    textAlign: "center",
   },
 });

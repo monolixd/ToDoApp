@@ -36,6 +36,20 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "fonts": [
+      {
+        "asset": "assets/fonts/Kanit-Regular.ttf",
+        "family": "Kanit-Regular"
+      },
+      {
+        "asset": "assets/fonts/Kanit-Medium.ttf",
+        "family": "Kanit-Medium"
+      },
+      {
+        "asset": "assets/fonts/Kanit-Bold.ttf",
+        "family": "Kanit-Bold"
+      }
+    ]
   }
 }

@@ -5,8 +5,19 @@ import { Picker } from "@react-native-picker/picker"; // นำเข้า Pick
 import TaskInput from "@/components/TaskInput";
 import TaskList from "@/components/TaskList";
 import TaskModal from "@/components/TaskModal";
+import { useFonts } from 'expo-font';
 
 export default function App() {
+  const [loaded] = useFonts({
+    'Kanit-Regular': require('../../assets/fonts/Kanit-Regular.ttf'),
+    'Kanit-Medium': require('../../assets/fonts/Kanit-Medium.ttf'),
+    'Kanit-Bold': require('../../assets/fonts/Kanit-Bold.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   const [task, setTask] = useState("");
   const [priority, setPriority] = useState("ต่ำ");
   const [tasks, setTasks] = useState([]);
@@ -169,8 +180,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f9fa",
   },
   header: {
+    fontFamily: 'Kanit-Bold',
     fontSize: 32,
-    fontWeight: "bold",
     marginBottom: 25,
     color: "#2c3e50",
     textAlign: "center",
@@ -193,12 +204,13 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   sortLabel: {
+    fontFamily: 'Kanit-Medium',
     fontSize: 16,
     marginRight: 10,
     color: "#2c3e50",
-    fontWeight: "500",
   },
   sortPicker: {
+    fontFamily: 'Kanit-Regular',
     flex: 1,
     height: 40,
     backgroundColor: "white",

@@ -39,6 +39,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="search"
+        options={{
+          title: "ค้นหา",
+          tabBarIcon: ({ color }) => (
+            <AntDesign size={23} name="search1" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="explore"
         options={{
           title: "การใช้งาน",

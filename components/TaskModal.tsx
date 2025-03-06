@@ -86,29 +86,32 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
+    fontFamily: 'Kanit-Bold',
     fontSize: 24,
-    fontWeight: "bold",
     color: "#2c3e50",
     marginBottom: 20,
     textAlign: "center",
   },
   modalTaskText: {
+    fontFamily: 'Kanit-Medium',
     fontSize: 18,
     color: "#2c3e50",
     marginBottom: 15,
     lineHeight: 24,
   },
   modalInfoText: {
+    fontFamily: 'Kanit-Regular',
     fontSize: 14,
     color: "#7f8c8d",
     marginBottom: 10,
   },
   modalPriorityText: {
+    fontFamily: 'Kanit-Medium',
     fontSize: 16,
-    fontWeight: "500",
     marginBottom: 10,
   },
   modalStatusText: {
+    fontFamily: 'Kanit-Regular',
     fontSize: 16,
     color: "#2c3e50",
     marginBottom: 20,
@@ -120,8 +123,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalCloseText: {
+    fontFamily: 'Kanit-Medium',
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
   },
 });
