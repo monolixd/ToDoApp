@@ -15,8 +15,9 @@ interface TaskListProps {
   tasks: Task[];
   onPress: (task: Task) => void;
   onToggleComplete: (id: string) => void;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
+  onEdit?: (id: string) => void; // ทำให้ optional
+  onDelete?: (id: string) => void; // ทำให้ optional
+  showActions?: boolean; // ✅ เพิ่ม prop สำหรับแสดงปุ่ม
 }
 
 const TaskList: React.FC<TaskListProps> = ({
@@ -25,6 +26,7 @@ const TaskList: React.FC<TaskListProps> = ({
   onToggleComplete,
   onEdit,
   onDelete,
+  showActions = true, // ✅ ค่าเริ่มต้นให้มีปุ่มแก้ไข/ลบ
 }) => {
   return (
     <FlatList
@@ -36,8 +38,8 @@ const TaskList: React.FC<TaskListProps> = ({
           item={item}
           onPress={onPress}
           onToggleComplete={onToggleComplete}
-          onEdit={onEdit}
-          onDelete={onDelete}
+          onEdit={showActions ? onEdit : undefined} // ✅ ถ้า showActions === false จะไม่ส่ง onEdit
+          onDelete={showActions ? onDelete : undefined} // ✅ ถ้า showActions === false จะไม่ส่ง onDelete
         />
       )}
     />

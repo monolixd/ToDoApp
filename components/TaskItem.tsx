@@ -17,8 +17,9 @@ interface TaskItemProps {
     createdAt: string;
   }) => void;
   onToggleComplete: (id: string) => void;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
+  onEdit?: (id: string) => void; // ทำให้เป็น optional
+  onDelete?: (id: string) => void; // ทำให้เป็น optional
+  showActions?: boolean; // ✅ เพิ่ม prop ควบคุมการแสดงปุ่มแก้ไข/ลบ
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({
@@ -27,6 +28,7 @@ const TaskItem: React.FC<TaskItemProps> = ({
   onToggleComplete,
   onEdit,
   onDelete,
+  showActions = true, // ✅ ค่าเริ่มต้นให้แสดงปุ่ม
 }) => {
   return (
     <View style={styles.taskContainer}>
@@ -68,24 +70,32 @@ const TaskItem: React.FC<TaskItemProps> = ({
             : "🟢 ต่ำ"}
         </Text>
       </View>
-      <TouchableOpacity
-        style={styles.completeButton}
-        onPress={() => onToggleComplete(item.id)}
-      >
-        <Text style={styles.completeText}>{item.completed ? "☑️" : "⬜"}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.editButton}
-        onPress={() => onEdit(item.id)}
-      >
-        <Text style={styles.editText}>✏️</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.deleteButton}
-        onPress={() => onDelete(item.id)}
-      >
-        <Text style={styles.deleteText}>🗑️</Text>
-      </TouchableOpacity>
+
+      {/* ✅ ซ่อนปุ่มทั้งหมดถ้า showActions === false */}
+      {showActions && (
+        <>
+          <TouchableOpacity
+            style={styles.completeButton}
+            onPress={() => onToggleComplete?.(item.id)}
+          >
+            <Text style={styles.completeText}>
+              {item.completed ? "☑️" : "⬜"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => onEdit?.(item.id)}
+          >
+            <Text style={styles.editText}>✏️</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => onDelete?.(item.id)}
+          >
+            <Text style={styles.deleteText}>🗑️</Text>
+          </TouchableOpacity>
+        </>
+      )}
     </View>
   );
 };
@@ -114,19 +124,19 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   taskText: {
-    fontFamily: 'Kanit-Medium',
+    fontFamily: "Kanit-Medium",
     fontSize: 16,
     marginBottom: 6,
     color: "#2c3e50",
   },
   completedTaskText: {
-    fontFamily: 'Kanit-Regular',
+    fontFamily: "Kanit-Regular",
     textDecorationLine: "line-through",
     color: "#95a5a6",
     fontStyle: "italic",
   },
   timeText: {
-    fontFamily: 'Kanit-Regular',
+    fontFamily: "Kanit-Regular",
     fontSize: 12,
     color: "#7f8c8d",
     fontStyle: "italic",
@@ -143,7 +153,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   priorityText: {
-    fontFamily: 'Kanit-Medium',
+    fontFamily: "Kanit-Medium",
     fontSize: 12,
     color: "white",
     textShadowColor: "rgba(0, 0, 0, 0.2)",
@@ -159,7 +169,7 @@ const styles = StyleSheet.create({
     borderColor: "#cfe2ff",
   },
   completeText: {
-    fontFamily: 'Kanit-Regular',
+    fontFamily: "Kanit-Regular",
     fontSize: 20,
     color: "#3498db",
   },
@@ -172,7 +182,7 @@ const styles = StyleSheet.create({
     borderColor: "#cfe2ff",
   },
   editText: {
-    fontFamily: 'Kanit-Regular',
+    fontFamily: "Kanit-Regular",
     fontSize: 20,
     color: "#3498db",
   },
@@ -185,7 +195,7 @@ const styles = StyleSheet.create({
     borderColor: "#ffcdd2",
   },
   deleteText: {
-    fontFamily: 'Kanit-Regular',
+    fontFamily: "Kanit-Regular",
     fontSize: 20,
     color: "#e74c3c",
   },

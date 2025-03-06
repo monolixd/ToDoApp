@@ -56,26 +56,6 @@ export default function SearchScreen() {
     setModalVisible(true);
   };
 
-  const handleToggleComplete = async (id) => {
-    const updatedTasks = allTasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
-    await AsyncStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setAllTasks(updatedTasks);
-    handleSearch(searchQuery);
-  };
-
-  const handleEdit = (id) => {
-    // เพิ่มโค้ดแก้ไขงาน
-  };
-
-  const handleDelete = async (id) => {
-    const updatedTasks = allTasks.filter((task) => task.id !== id);
-    await AsyncStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setAllTasks(updatedTasks);
-    handleSearch(searchQuery);
-  };
-
   return (
     <ThemedView style={styles.container}>
       <View style={styles.searchContainer}>
@@ -98,9 +78,7 @@ export default function SearchScreen() {
         <TaskList
           tasks={searchResults}
           onPress={handleTaskPress}
-          onToggleComplete={handleToggleComplete}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
+          showActions={false} // ส่ง props ไปซ่อนปุ่มแก้ไขและลบ
         />
       ) : (
         searchQuery.trim() !== "" && (
