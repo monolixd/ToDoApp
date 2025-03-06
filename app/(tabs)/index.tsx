@@ -120,7 +120,7 @@ export default function App() {
       );
     }
 
-    setTasks(sortedTasks); // ✅ อัปเดต React State ด้วยอาร์เรย์ที่จัดเรียงใหม่
+    setTasks(sortedTasks); 
     setSortOption(option);
   };
 
